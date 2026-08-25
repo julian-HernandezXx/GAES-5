@@ -45,9 +45,16 @@ Marca lo que SÍ entra en el MVP (lo mínimo para la Demo Day) y lo que sería "
 | Funcionalidad | ¿MVP? | ¿Extra? | Responsable |
 |---------------|:-----:|:-------:|-------------|
 |Registro de usuarios |✅ | |Backend |
-|Inicio de sesión |✅ | |Backend |
+|Inicio de sesión     |✅ | |Backend |
 |Publicar una reseña de una zona |✅ | |Frontend + Backend |
 |Ver reseñas en tiempo real |✅ | |Backend |
+|Mapa con zonas reportadas  | ✅ | |Frontend|
+|Sistema de categorías (robo, acoso, etc.) |✅| |Backend|
+|Perfil del usuario ||✅| |Frontend|
+|Calificación de utilidad de reseñas || ✅ |    |Frontend|
+|Estadísticas de zonas más reportadas|| ✅ |   |Backend|
+
+Feature clave: Reportes ciudadanos en tiempo real mediante reseñas geolocalizadas.
 
 > Regla: si algo no está en el MVP, **no se construye hasta terminar el MVP**. Primero lo esencial.
 
@@ -57,16 +64,38 @@ Marca lo que SÍ entra en el MVP (lo mínimo para la Demo Day) y lo que sería "
 
 Deben cubrir **los mínimos del curso**. Marquen qué usarán:
 
-- [ ] **Frontend:** HTML semántico + CSS + JavaScript (DOM).
-- [ ] **Backend:** Node.js + Express (API con rutas).
-- [ ] **Base de datos:** _¿cuál? (SQLite / PostgreSQL / MySQL / otra)_ — listar tablas abajo.
-- [ ] **Feature clave:** _¿cuál es la funcionalidad estrella del proyecto?_
-- [ ] **Tiempo real (Socket.IO):** ¿lo usarán? _(suma puntos)_
-- [ ] **Autenticación:** ¿login con contraseña? ¿sesiones?
-- [ ] **Otra técnica / API externa:** _¿cuál?_
+- [☑] **Frontend:** HTML semántico + CSS + JavaScript (DOM).
+- [☑] **Backend:** Node.js + Express (API con rutas).
+- [☑] **Base de datos:** MySQL
+- [☑] **Feature clave:** Reseñas y reportes en tiempo real
+- [☑] **Tiempo real (Socket.IO):Socket.IO
+- [☑] **Autenticación:** Login con contraseña (hash + sesiones/JWT)
+- [☑] **Otra técnica / API externa:**Leaflet + OpenStreetMap para el mapa
 
 **Tablas de datos previstas (borrador):**
-```
+```usuarios(
+ id,
+ nombre,
+ correo,
+ clave_hash,
+ fecha_registro
+)
+
+resenas(
+ id,
+ usuario_id,
+ titulo,
+ descripcion,
+ categoria,
+ latitud,
+ longitud,
+ fecha
+)
+
+categorias(
+ id,
+ nombre
+)
 usuarios(id, nombre, correo, clave_hash, ...)
 ...
 ```
@@ -75,22 +104,23 @@ usuarios(id, nombre, correo, clave_hash, ...)
 
 ## 5. Requerimientos de despliegue
 
-- **Frontend se desplegará en:** _(GitHub Pages / Netlify / Vercel / …)_
-- **Backend se desplegará en:** _(Render / Railway / Fly.io / VPS / … — ver [../DESPLIEGUE-CICD.md](../DESPLIEGUE-CICD.md))_
-- **Base de datos:** _(archivo SQLite junto a la app / servicio gestionado / …)_
-- **Dominio:** _(subdominio gratis del host / dominio propio)_
-- **CI/CD:** ¿cada `push` actualiza el sitio? (debe ser **sí**)
-- **Link del proyecto (cuando exista):** _..._
+- **Frontend se desplegará en:** Vercel
+- **Backend se desplegará en:** Render
+- **Base de datos:** MySQL
+- **Dominio:** Subdominio gratuito de Vercel
+- **CI/CD:**✅ Sí, despliegue automático con cada push)
+- **Link del proyecto (cuando exista):**Pendiente
 
 ### Costos estimados de servidores
 Aunque usemos capas gratuitas para el curso, estimen qué costaría en "producción real":
 
 | Recurso | Proveedor / plan | Costo estimado (mes) |
 |---------|------------------|----------------------|
-| Hosting del backend | | |
-| Base de datos | | |
-| Dominio | | (anual) |
-| **Total estimado** | | |
+| Hosting del backend |Render Starter |USD 7/mes |
+| Base de datos |Railway MySQL |USD 5/mes |
+|Frontend         |Vercel |        |Gratis|
+| Dominio |.com | USD 12/año |       
+| **Total estimado** | | 24 USD| 
 
 ---
 
@@ -99,8 +129,8 @@ Aunque usemos capas gratuitas para el curso, estimen qué costaría en "producci
 | Clases | Qué esperamos terminar |
 |--------|------------------------|
 | 07–08 (backend) | Servidor + API base |
-| 09–10 (datos) | Datos que persisten |
-| 11–13 (feature / auth / tiempo real) | La feature clave del proyecto |
+| 09–10 (datos) | Datos que persisten |Base de datos y persistencia de usuarios y reseña
+| 11–13 (feature / auth / tiempo real) | Socket.IO + reportes en tiempo real + autenticación|
 | 14–15 (integración) | Todo junto + desplegado |
 | 16 | Demo lista y ensayada |
 
@@ -108,8 +138,18 @@ Aunque usemos capas gratuitas para el curso, estimen qué costaría en "producci
 
 ## 7. Riesgos y dudas para el cliente (las lleva el PM)
 
-- **Lo que más nos preocupa:** _..._
-- **Preguntas para el instructor (cliente):** _(las hace el PM)_
+- **Lo que más nos preocupa:**Riesgos
+
+Sincronizar correctamente las reseñas en tiempo real entre varios usuarios.
+
+Validar que los reportes tengan información útil y evitar spam.
+
+Integrar correctamente el mapa con los reportes geográficos.
+- **Preguntas para el instructor (cliente):**¿La geolocalización puede ser manual (seleccionando un punto en el mapa) o debe obtenerse automáticamente?
+
+¿El MVP necesita moderación de reseñas o basta con publicarlas directamente?
+
+¿Es obligatorio implementar JWT o pueden utilizarse sesiones de Express?
 
 ---
 

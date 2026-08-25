@@ -10,16 +10,16 @@ El **PM lidera** esta reunión y es el canal con el instructor (que hace de clie
 
 ## 1. Identidad del equipo
 
-- **Nombre del equipo:**
-- **Nombre del proyecto:**
+- **Nombre del equipo:GAES-5**
+- **Nombre del proyecto: SegurIA**
 - **Integrantes y roles:**
   | Integrante | Rol | Responsable de |
   |-----------|-----|----------------|
-  | | ⚙️ DevOps | Repo, Git, CI/CD, despliegue |
-  | | 🎨 Frontend | Interfaz, estilos, interacción |
-  | | 🔧 Backend | Servidor, API, lógica + BD |
-  | | 🧭 PM | Canal con el cliente, QA, entregas, desbloquear al equipo |
-  | | *(otros integrantes)* | Comparten Frontend/Backend según el tamaño del equipo |
+  |Laura Quiroz | ⚙️ DevOps | Repo, Git, CI/CD, despliegue |
+  |Johan Sanchez | 🎨 Frontend | Interfaz, estilos, interacción |
+  |Kaleth García | 🔧 Backend | Servidor, API, lógica + BD |
+  |Jorlan Hernandez | 🧭 PM | Canal con el cliente, QA, entregas, desbloquear al equipo |
+  |Julian Monsalve | *(otros integrantes)* | Comparten Frontend/Backend según el tamaño del equipo |
 
 > **Datos** y la **feature clave** las conoce y las trabaja **todo el equipo** (son la estructura del
 > proyecto, no un rol aparte).
@@ -28,13 +28,13 @@ El **PM lidera** esta reunión y es el canal con el instructor (que hace de clie
 
 ## 2. Visión del proyecto
 
-**La idea en una frase:** _..._
+**La idea en una frase: SegurIA es una plataforma colaborativa que permite a los ciudadanos reportar y consultar zonas de riesgo en tiempo real mediante reseñas y alertas de la comunidad.** _..._
 
-- **¿Para quién es? (usuarios):**
-- **¿Qué problema resuelve o qué permite hacer?:**
-- **Visión (a dónde quieren llevarlo):**
-- **Modelo:** ¿es **B2B** (para empresas) o **B2C** (para consumidores/usuarios finales)?
-- **¿Cómo generaría valor o dinero?** (si aplica): _..._
+- **¿Para quién es? (usuarios): Ciudadanos, estudiantes, turistas y cualquier persona que desee conocer el nivel de seguridad de una zona antes de desplazarse.**
+- **¿Qué problema resuelve o qué permite hacer?: Las personas no cuentan con información inmediata sobre situaciones de inseguridad en determinados lugares. SegurIA permite que los mismos usuarios compartan reportes y reseñas para advertir a otros en tiempo real.**
+- **Visión (a dónde quieren llevarlo): Convertirse en una aplicación comunitaria de referencia para mejorar la prevención y la toma de decisiones sobre movilidad y seguridad urbana.**
+- **Modelo: B2C (usuarios finales)** 
+- **¿Cómo generaría valor o dinero? Inicialmente será un proyecto académico. En una versión comercial podría generar ingresos mediante alianzas con municipios, publicidad local y servicios premium de analítica.** (si aplica): _..._
 
 ---
 
@@ -44,9 +44,10 @@ Marca lo que SÍ entra en el MVP (lo mínimo para la Demo Day) y lo que sería "
 
 | Funcionalidad | ¿MVP? | ¿Extra? | Responsable |
 |---------------|:-----:|:-------:|-------------|
-| Ej: registro e inicio de sesión | ✅ | | Backend |
-| | | | |
-| | | | |
+|Registro de usuarios |✅ | |Backend |
+|Inicio de sesión |✅ | |Backend |
+|Publicar una reseña de una zona |✅ | |Frontend + Backend |
+|Ver reseñas en tiempo real |✅ | |Backend |
 
 > Regla: si algo no está en el MVP, **no se construye hasta terminar el MVP**. Primero lo esencial.
 

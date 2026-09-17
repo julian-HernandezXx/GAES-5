@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-16T22:21:00Z",
+  "title": "Design System: SegurIA",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Amarillo Señalética Táctico", "canonical": "#FFE500", "tonalRamp": ["#332E00", "#665C00", "#998A00", "#CCB800", "#FFE500", "#FFEA33", "#FFF066", "#FFF599"] },
+      "safety-emerald": { "role": "secondary", "displayName": "Verde Escudo Seguro", "canonical": "#10B981", "tonalRamp": ["#042F1A", "#065F38", "#0A8F56", "#10B981", "#34D399", "#6EE7B7", "#A7F3D0", "#D1FAE5"] },
+      "hazard-red": { "role": "secondary", "displayName": "Rojo Alerta Crítica", "canonical": "#EF4444", "tonalRamp": ["#450A0A", "#7F1D1D", "#B91C1C", "#EF4444", "#F87171", "#FCA5A5", "#FECACA", "#FEE2E2"] },
+      "radar-cyan": { "role": "secondary", "displayName": "Azul Cian Radar", "canonical": "#00E5FF", "tonalRamp": ["#00363D", "#006C7A", "#00A3B8", "#00E5FF", "#33EBFF", "#66F0FF", "#99F5FF", "#CCFAFF"] },
+      "neutral-bg": { "role": "neutral", "displayName": "Obsidiana Vacío", "canonical": "#050811", "tonalRamp": ["#050811", "#080D18", "#0E1626", "#141F36", "#1E293B", "#334155", "#64748B", "#94A3B8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Encabezados principales de cápsula y marca." },
+      "body": { "displayName": "Body", "purpose": "Descripciones operativas y textos explicativos." },
+      "label": { "displayName": "Mono Label", "purpose": "Telemetría de red, coordenadas GPS y claves criptográficas." }
+    },
+    "shadows": [
+      { "name": "shadow-subtle", "value": "0 4px 8px rgba(0, 0, 0, 0.35)", "purpose": "Botones y controles en reposo." },
+      { "name": "shadow-floating", "value": "0 8px 12px rgba(0, 0, 0, 0.5)", "purpose": "Cápsula central de autenticación." },
+      { "name": "shadow-modal", "value": "0 10px 14px rgba(0, 0, 0, 0.65)", "purpose": "Diálogos modales nativos." }
+    ],
+    "motion": [
+      { "name": "tactile-snap", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Transiciones rápidas de botones y entradas." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Boton Primario de Acceso",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Botón principal de alta visibilidad para autenticación en la red.",
+      "html": "<button class=\"ds-btn-primary\">INGRESAR A SEGURIA</button>",
+      "css": ".ds-btn-primary { background: #FFE500; color: #050811; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 1rem; padding: 14px 20px; border: none; border-radius: 8px; cursor: pointer; transition: background-color 160ms ease, transform 160ms ease; } .ds-btn-primary:hover { background: #F2D800; transform: translateY(-1px); } .ds-btn-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Boton de Acceso Passkey / Biometria",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acceso biométrico rápido de un toque.",
+      "html": "<button class=\"ds-btn-secondary\">Passkey / Biometría</button>",
+      "css": ".ds-btn-secondary { background: #141F36; border: 1px solid rgba(255, 255, 255, 0.18); color: #F8FAFC; font-family: 'Archivo', sans-serif; font-size: 0.875rem; font-weight: 600; padding: 12px 16px; border-radius: 8px; cursor: pointer; } .ds-btn-secondary:hover { background: rgba(255, 255, 255, 0.06); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Consola Situacional de Alerta Temprana Urbana",
+    "overview": "SegurIA rechaza los formularios de acceso estériles y corporativos de tarjeta blanca. El sistema visual concibe la interfaz como una cabina táctica de comando y protección civil ciudadana, donde conviven una cartografía vectorial viva y un núcleo de autenticación de alta precisión militar y señalética urbana internacional.",
+    "keyCharacteristics": [
+      "Estética táctica de alta visibilidad con contraste riguroso",
+      "Cartografía en tiempo real integrada con radar activo en canvas",
+      "Microinteracciones de verificación inmediata y Passkeys",
+      "Accesibilidad incondicional WCAG AA"
+    ],
+    "rules": [
+      { "name": "The High-Vis Accent Rule", "body": "El amarillo señalética (#FFE500) se reserva exclusivamente para acciones primarias, focos activos y confirmaciones críticas.", "section": "colors" },
+      { "name": "The Tabular Telemetry Rule", "body": "Todos los datos numéricos, tiempos de latencia y coordenadas geográficas emplean Chivo Mono con font-variant-numeric: tabular-nums.", "section": "typography" },
+      { "name": "The Zero-Glow Rule", "body": "Queda estrictamente prohibido el uso de sombras brillantes o resplandores cromáticos difusos con halo cero.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do garantizar un ratio de contraste mínimo de 4.5:1 en cualquier texto secundario.",
+      "Do utilizar tipografía monoespaciada Chivo Mono exclusivamente para métricas, códigos criptográficos y coordenadas.",
+      "Do preservar los controles de navegación por teclado completos en todos los diálogos y formularios."
+    ],
+    "donts": [
+      "Don't aplicar gradientes de color al texto.",
+      "Don't utilizar halos brillantes fluorescentes difusos o sombras de color en fondos oscuros.",
+      "Don't recurrir a emojis o glifos Unicode como sustitutos de iconos.",
+      "Don't bloquear el acceso de emergencia ciudadano tras procesos de registro burocrático."
+    ]
+  }
+}

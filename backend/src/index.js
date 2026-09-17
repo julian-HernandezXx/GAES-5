@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const { checkDatabaseConnection } = require("./config/db");
 const categoriasRouter = require("./routes/categorias");
+const authRouter = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,11 +23,13 @@ app.get("/health", (_req, res) => {
 
 // Rutas de la API
 app.use("/api/categorias", categoriasRouter);
+app.use("/api/auth", authRouter);
 
 app.listen(PORT, async () => {
   console.log(`SegurIA API escuchando en http://localhost:${PORT}`);
   console.log(`Health: http://localhost:${PORT}/health`);
   console.log(`Categorías: http://localhost:${PORT}/api/categorias`);
+  console.log(`Registro: POST http://localhost:${PORT}/api/auth/register`);
   await checkDatabaseConnection();
 });
 

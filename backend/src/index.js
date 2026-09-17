@@ -30,6 +30,7 @@ app.listen(PORT, async () => {
   console.log(`Health: http://localhost:${PORT}/health`);
   console.log(`Categorías: http://localhost:${PORT}/api/categorias`);
   console.log(`Registro: POST http://localhost:${PORT}/api/auth/register`);
+  console.log(`Login: POST http://localhost:${PORT}/api/auth/login`);
   await checkDatabaseConnection();
 });
 

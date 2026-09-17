@@ -1,6 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const { pool } = require("../config/db");
+const { requireAuth, JWT_SECRET } = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -12,7 +14,6 @@ router.post("/register", async (req, res) => {
   try {
     const { nombre, correo, clave, password } = req.body;
 
-    // Aceptamos 'clave' o 'password' para máxima compatibilidad
     const userPassword = clave || password;
 
     // 1. Validar campos requeridos
@@ -35,14 +36,14 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ error: "El formato de correo no es válido." });
     }
 
-    // 3. Validar longitud mínima de la contraseña
+    // 3. Validar longitud mínima de contraseña
     if (userPassword.length < 6) {
       return res.status(400).json({
         error: "La contraseña debe tener al menos 6 caracteres.",
       });
     }
 
-    // 4. Verificar si el correo ya está registrado en la base de datos
+    // 4. Verificar si el correo ya existe
     const [usuariosExistentes] = await pool.query(
       "SELECT id FROM usuarios WHERE correo = ? LIMIT 1",
       [cleanCorreo]
@@ -54,18 +55,17 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // 5. Hashear la contraseña con bcrypt (cost factor: 10 salt rounds)
-    // NUNCA se almacena la contraseña en texto plano
+    // 5. Hashear la contraseña con bcrypt (10 rounds)
     const saltRounds = 10;
     const clave_hash = await bcrypt.hash(userPassword, saltRounds);
 
-    // 6. Insertar el nuevo usuario en MySQL
+    // 6. Insertar en MySQL
     const [resultado] = await pool.query(
       "INSERT INTO usuarios (nombre, correo, clave_hash) VALUES (?, ?, ?)",
       [cleanNombre, cleanCorreo, clave_hash]
     );
 
-    // 7. Responder con éxito y datos seguros (sin devolver el hash de la clave)
+    // 7. Respuesta exitosa
     return res.status(201).json({
       mensaje: "Usuario registrado con éxito.",
       usuario: {
@@ -82,6 +82,89 @@ router.post("/register", async (req, res) => {
       detalle: error.message,
     });
   }
+});
+
+/**
+ * POST /api/auth/login
+ * Autentica usuario, valida hash y retorna JWT
+ */
+router.post("/login", async (req, res) => {
+  try {
+    const { correo, clave, password } = req.body;
+    const userPassword = clave || password;
+
+    // 1. Validar campos
+    if (!correo || !correo.trim() || !userPassword) {
+      return res.status(400).json({
+        error: "Debes ingresar correo y contraseña.",
+      });
+    }
+
+    const cleanCorreo = correo.trim().toLowerCase();
+
+    // 2. Buscar al usuario en la base de datos
+    const [usuarios] = await pool.query(
+      "SELECT id, nombre, correo, clave_hash FROM usuarios WHERE correo = ? LIMIT 1",
+      [cleanCorreo]
+    );
+
+    if (usuarios.length === 0) {
+      // Mensaje genérico por seguridad (no revelar si existe el correo)
+      return res.status(401).json({
+        error: "Credenciales inválidas. Revisa tu correo o contraseña.",
+      });
+    }
+
+    const usuario = usuarios[0];
+
+    // 3. Comparar contraseña con el hash almacenado
+    const coincide = await bcrypt.compare(userPassword, usuario.clave_hash);
+    if (!coincide) {
+      return res.status(401).json({
+        error: "Credenciales inválidas. Revisa tu correo o contraseña.",
+      });
+    }
+
+    // 4. Generar Token JWT con vigencia de 7 días
+    const payload = {
+      id: usuario.id,
+      nombre: usuario.nombre,
+      correo: usuario.correo,
+    };
+
+    const token = jwt.sign(payload, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    // 5. Responder con token y datos de usuario (sin hash)
+    return res.json({
+      mensaje: "Inicio de sesión exitoso.",
+      token,
+      usuario: {
+        id: usuario.id,
+        nombre: usuario.nombre,
+        correo: usuario.correo,
+      },
+    });
+  } catch (error) {
+    console.error("Error en /api/auth/login:", error);
+    return res.status(500).json({
+      error: "Error interno del servidor al iniciar sesión.",
+      detalle: error.message,
+    });
+  }
+});
+
+/**
+ * GET /api/auth/me
+ * Endpoint protegido para validar token y devolver datos del usuario logueado
+ */
+router.get("/me", requireAuth, (req, res) => {
+  // req.user proviene de la verificación del middleware requireAuth
+  res.json({
+    ok: true,
+    usuario: req.user,
+  });
 });
 
 module.exports = router;

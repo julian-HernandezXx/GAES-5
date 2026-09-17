@@ -1,0 +1,47 @@
+-- =======================================================
+-- Proyecto: SegurIA (GAES-5)
+-- Base de datos y tablas iniciales para el MVP
+-- =======================================================
+
+CREATE DATABASE IF NOT EXISTS seguria CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE seguria;
+
+-- 1. Tabla: usuarios
+CREATE TABLE IF NOT EXISTS usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  correo VARCHAR(150) NOT NULL UNIQUE,
+  clave_hash VARCHAR(255) NOT NULL,
+  fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- 2. Tabla: categorias
+CREATE TABLE IF NOT EXISTS categorias (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL UNIQUE
+) ENGINE=InnoDB;
+
+-- 3. Tabla: resenas
+CREATE TABLE IF NOT EXISTS resenas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  categoria_id INT NOT NULL,
+  titulo VARCHAR(150) NOT NULL,
+  descripcion TEXT NOT NULL,
+  latitud DECIMAL(10, 8) NOT NULL,
+  longitud DECIMAL(11, 8) NOT NULL,
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_resenas_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+  CONSTRAINT fk_resenas_categoria FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE RESTRICT
+) ENGINE=InnoDB;
+
+-- =======================================================
+-- Datos Semilla (Seeds)
+-- =======================================================
+INSERT INTO categorias (nombre) VALUES 
+  ('Robo'),
+  ('Acoso'),
+  ('Hurto'),
+  ('Vandalismo'),
+  ('Otro')
+ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);

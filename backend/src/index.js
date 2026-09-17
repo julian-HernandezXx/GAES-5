@@ -2,12 +2,16 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const { checkDatabaseConnection } = require("./config/db");
+const categoriasRouter = require("./routes/categorias");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
+// Ruta de comprobación de salud
 app.get("/health", (_req, res) => {
   res.json({
     ok: true,
@@ -16,7 +20,13 @@ app.get("/health", (_req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+// Rutas de la API
+app.use("/api/categorias", categoriasRouter);
+
+app.listen(PORT, async () => {
   console.log(`SegurIA API escuchando en http://localhost:${PORT}`);
   console.log(`Health: http://localhost:${PORT}/health`);
+  console.log(`Categorías: http://localhost:${PORT}/api/categorias`);
+  await checkDatabaseConnection();
 });
+

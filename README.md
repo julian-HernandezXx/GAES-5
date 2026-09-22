@@ -1,4 +1,4 @@
-# SegurIA — GAES-5
+# SegurIA — GAES-5 (SENA)
 
 **Plataforma colaborativa de seguridad urbana:** los ciudadanos reportan y consultan zonas de riesgo en tiempo real mediante reseñas geolocalizadas, alertas de la comunidad y un mapa interactivo.
 

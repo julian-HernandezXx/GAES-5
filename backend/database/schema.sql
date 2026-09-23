@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nombre VARCHAR(100) NOT NULL,
   correo VARCHAR(150) NOT NULL UNIQUE,
   clave_hash VARCHAR(255) NOT NULL,
+  rol ENUM('usuario', 'administrador', 'desarrollador') DEFAULT 'usuario',
   fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
